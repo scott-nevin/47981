@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
 {
     //Declare Variables and initialize the
     //random number seed
-    const int SIZE=100;
-     int array[SIZE],aCopy[SIZE];
+    const int SIZE=9;
+     int array[SIZE];
     srand(static_cast<unsigned int>(time(0)));
     
     //Fill the Array
@@ -60,9 +60,7 @@ void markSort(int a[],int n){
 void sortPos(int a[],int n,int pos){
      if(pos>n-1)return;
      for(int i=pos+1;i<n;i++){
-             //if(a[pos]>a[i])swap1(a[pos],a[i]);
-            // if(a[pos]>a[i])swap2(a[pos],a[i]);
-            if(a[pos]>a[i])swap3(a,pos,i);
+             if(a[pos]>a[i])swap1(a[pos],a[i]);
       }
 }
 
