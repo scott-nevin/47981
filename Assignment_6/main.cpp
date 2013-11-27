@@ -58,13 +58,6 @@ void Menu(){
     cout<<"Type 0 for Gaddis 7th Edition Chapter 7 problem 1"<<endl;
     cout<<"Type 1 for Gaddis 7th Edition Chapter 7 problem 2"<<endl;
     cout<<"Type 2 for Gaddis 7th Edition Chapter 7 problem 3"<<endl;
-    cout<<"Type 3 for Gaddis 7th Edition Chapter 7 problem 4"<<endl;
-    cout<<"Type 4 for Gaddis 7th Edition Chapter 7 problem 5"<<endl;
-    cout<<"Type 5 for Gaddis 7th Edition Chapter 7 problem 6"<<endl;
-    cout<<"Type 6 for Gaddis 7th Edition Chapter 7 problem 7"<<endl;
-    cout<<"Type 7 for Gaddis 7th Edition Chapter 7 problem 8"<<endl;
-    cout<<"Type 8 for Gaddis 7th Edition Chapter 7 problem 9"<<endl;
-    cout<<"Type 9 for Gaddis 7th Edition Chapter 7 problem 10"<<endl;
     cout<<"Type anything else to exit \n"<<endl;
 }
 
