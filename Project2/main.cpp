@@ -20,17 +20,19 @@ const float PI = 3.14;
 
 //Function prototypes
 void input(int &, int &);
-bool hitMiss(float, int);
+bool hitMiss(float, int, char);
 int ballDst(int, int);
 int plcTnk();
+int getDiff();
 
 //Begin execution here
 int main(){
 
     //Declare variables
-    int ang, power, attempt, tnkPos;
+    int ang, power, attempt, tnkPos, diff=10;
     float dist;
     bool hit;
+    char choice;//Choice for difficulty
 
     //Display title and story
     cout<<"\n\n Fatal Trajectory \n\n"<<endl;
@@ -49,6 +51,9 @@ int main(){
     //place tank
     tnkPos = plcTnk();
 
+    //Prompt for difficulty
+    diff =  getDiff();
+
     do{
 
         //Prompt user for firing instructions
@@ -60,7 +65,7 @@ int main(){
         cout<<"your projectile hit "<<dist<<" meters"<<endl;
 
         //test if hit or miss
-        hit = hitMiss(dist, tnkPos);
+        hit = hitMiss(dist, tnkPos, diff);
 
         //Display if hit or miss
         if(hit==true){
@@ -92,6 +97,38 @@ int main(){
     return 0;
 }
 
+//function for selecting difficulty
+int getDiff(){
+
+    char chc;
+    int diff;
+
+    //Prompt for difficulty
+    cout<<"Please select your difficulty"<<endl;
+    cout<<"Type e for easy, type h for hard"<<endl;
+    cin>>chc;
+
+    //validate input
+    while(chc=='e'||chc=='E' || chc=='h'||chc=='H'){
+        cout<<"Invalid choice, type E or H"<<endl;
+        cin>>chc;
+    }
+
+    //initialize difficulty by setting explosive blast radius
+    if(chc == 'e'||chc == 'E'){
+        cout<<"Easy mode activated!"<<endl;
+        cout<<"Cluster bombs enabled"<<endl;
+        diff = 20;
+    }
+    else if(chc == 'h'||chc == 'H'){
+        cout<<"Hard mode enabled!"<<endl;
+        cout<<"projectile blast radius: 10m"<<endl;
+        diff = 10;
+    }
+    return diff;
+}
+
+//Function to place tank
 int plcTnk(){
 
     int x;
@@ -100,6 +137,7 @@ int plcTnk(){
 
 }
 
+//Function for user firing input
 void input(int &a,int &p){
         //Prompt the user for inputs
         do{
@@ -108,9 +146,9 @@ void input(int &a,int &p){
         cout<<"Input projectile power in meters per second (1-100)"<<endl;
         cin>>p;
         }while(a>90||p>100||a<0||p<0);
-
 }
 
+//Function calculating where projectile hits
 int ballDst(int a, int p){
 
     float d;
@@ -118,12 +156,13 @@ int ballDst(int a, int p){
     return d;
 }
 
-bool hitMiss(float d, int t){
+//Function testing if projectile hit
+bool hitMiss(float dist, int t, char diff){
 
-    if (d < t-10||d > t+10){
-        return false;
-    }
-    else if (d > t-10||d < t+10){
+    if (dist > t-diff && dist < t+diff){
         return true;
     }
+    else
+        return false;
 }
+
