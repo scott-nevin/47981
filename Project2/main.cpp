@@ -109,7 +109,7 @@ int getDiff(){
     cin>>chc;
 
     //validate input
-    while(chc=='e'||chc=='E' || chc=='h'||chc=='H'){
+    while(chc!='e'&&chc!='E' && chc!='h'&&chc!='H'){
         cout<<"Invalid choice, type E or H"<<endl;
         cin>>chc;
     }
@@ -118,10 +118,11 @@ int getDiff(){
     if(chc == 'e'||chc == 'E'){
         cout<<"Easy mode activated!"<<endl;
         cout<<"Cluster bombs enabled"<<endl;
+        cout<<"Blast radius: 20m"<<endl;
         diff = 20;
     }
     else if(chc == 'h'||chc == 'H'){
-        cout<<"Hard mode enabled!"<<endl;
+        cout<<"Hard mode!"<<endl;
         cout<<"projectile blast radius: 10m"<<endl;
         diff = 10;
     }
@@ -143,9 +144,11 @@ void input(int &a,int &p){
         do{
         cout<<"Input firing angle (0-90)"<<endl;
         cin>>a;
+    }while(a>90||a<0);
+        do{
         cout<<"Input projectile power in meters per second (1-100)"<<endl;
         cin>>p;
-        }while(a>90||p>100||a<0||p<0);
+        }while(p>100||p<0);
 }
 
 //Function calculating where projectile hits
