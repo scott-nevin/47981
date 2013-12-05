@@ -59,7 +59,7 @@ int main(){
         cout<<endl<<endl;
 
         //Loop for tank destruction
-        for (int attmpt = 1; attmpt<5; attmpt++){
+        for (int attmpt = 1; attmpt<20; attmpt++){
             play(tnkPos, diff, score);
         }
         
@@ -88,6 +88,7 @@ int getDiff(){
     while(chc!='e'&&chc!='E' && chc!='h'&&chc!='H'){
         cout<<"Invalid choice, type E or H"<<endl;
         cin>>chc;
+        cout<<endl;
     }
 
     //initialize difficulty by setting explosive blast radius
