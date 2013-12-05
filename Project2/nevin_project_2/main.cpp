@@ -21,28 +21,29 @@ const float PI = 3.14;
 //Function prototypes
 void input(int &, int &);
 bool hitMiss(float, int, char);
-int ballDst(int, int);
-int plcTnk();
-int getDiff();
+int  ballDst(int, int);
+int  plcTnk();
+int  getDiff();
 void hitDisp(bool, int, int);
-int play(int&, int, int&);
+int  play(int&, int, int&, int, int&, char&);
 
 //Begin execution here
 int main(){
 
     //Declare variables
-    int ang, power, attempt=1, tnkPos, score=0, diff;
+    int ang, power, attempt=1, tnkPos,
+            score=0, diff, ammo=20, att=0;
     float dist;
-    bool hit;
-    char choice;
+    bool hit, bonus;
+    char choice, b;
 
     //Display title and story
     cout<<"\n\n Fatal Trajectory \n\n"<<endl;
-    cout<<"You're under attack!\nOutside your base is a tank, preparing to destroy your army."<<endl;
+    cout<<"You're under attack!\nOutside your base, several tanks appear"<<endl;
     cout<<"There is a thick fog and you won't be able to destroy the tank by sight."<<endl;
-    cout<<"Your shotty sonar has determined the tank is within 1000 meters."<<endl;
+    cout<<"The tanks will come within 1000 meters."<<endl;
     cout<<"Input the angle to aim your cannon and the speed to fire the projectile."<<endl;
-    cout<<"You'll have to destroy the tank within _ attempts or it will destroy you.\n\n"<<endl;
+    cout<<"You have 20 shots to destroy as many as you can.\n\n"<<endl;
 
     //Get the system time
     unsigned seed = time(0);
@@ -57,13 +58,25 @@ int main(){
         //Prompt for difficulty
         diff =  getDiff();
         cout<<endl<<endl;
-
+        
         //Loop for tank destruction
-        for (int attmpt = 1; attmpt<20; attmpt++){
-            play(tnkPos, diff, score);
+        for (int attmpt = 1; attmpt<20; attmpt++){ 
+            
+            //reset bonus to 0
+            b = 0;
+            
+            play(tnkPos, diff, score, ammo, att, b);
+            ammo--;
+            
+            if (b == 1){
+                ammo++;
+                attempt--;
+            }
+            
         }
         
-        cout<<"score = "<<score<<endl;      
+        cout<<"score = "<<score<<endl; 
+        cout<<"# of hits = "<<score/50<<endl;
         
         cout<<"Play again? type Y to play again"<<endl;
         cin>>choice;
@@ -168,11 +181,15 @@ void hitDisp(bool hit, int d, int t){
 }
 
 //function for general gameplay
-int play(int &tnkPos, int diff, int &score){
+int play(int &tnkPos, int diff, int &score, int ammo, int &att, char &b){
 
     int ang, power;
     float dist;
     bool hit;
+    
+    //show how many shots left
+    cout<<"Tank is approx. "<<tnkPos<<" meters away."<<endl;
+    cout<<"You have "<<ammo<<" shots left."<<endl;
 
     //Prompt user for firing instructions
     input (ang, power);
@@ -187,12 +204,22 @@ int play(int &tnkPos, int diff, int &score){
 
     //Display if hit or miss
     hitDisp(hit, dist, tnkPos);
+    
+    //increment bonus tester
+    att++;
 
     //if hit, move tank, increment score
     if(hit==true){
-        cout<<"Another tank spotted!"<<endl<<endl;
+        
         tnkPos = plcTnk();
-        score++;
+        score+=50;
+        if(att==1){
+            cout<<"Hole in one bonus!"<<endl;
+            cout<<"Extra shot rewarded"<<endl<<endl;
+            b = 1;
+        }
+        cout<<"Another tank spotted!"<<endl<<endl;
+        att=0;
     }
     return score;
 
