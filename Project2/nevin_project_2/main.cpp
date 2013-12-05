@@ -24,15 +24,17 @@ bool hitMiss(float, int, char);
 int ballDst(int, int);
 int plcTnk();
 int getDiff();
+void hitDisp(bool, int, int);
+int play(int&, int, int&);
 
 //Begin execution here
 int main(){
 
     //Declare variables
-    int ang, power, attempt, tnkPos, diff=10;
+    int ang, power, attempt=1, tnkPos, score=0, diff;
     float dist;
     bool hit;
-    char choice;//Choice for difficulty
+    char choice;
 
     //Display title and story
     cout<<"\n\n Fatal Trajectory \n\n"<<endl;
@@ -48,51 +50,25 @@ int main(){
     //seed random number generator
     srand(seed);
 
-    //place tank
-    tnkPos = plcTnk();
-
-    //Prompt for difficulty
-    diff =  getDiff();
-
     do{
+        //place tank
+        tnkPos = plcTnk();
 
-        //Prompt user for firing instructions
-        input (ang, power);
+        //Prompt for difficulty
+        diff =  getDiff();
+        cout<<endl<<endl;
 
-        //calculate projectile distance
-        dist = ballDst(ang, power);
-
-        cout<<"your projectile hit "<<dist<<" meters"<<endl;
-
-        //test if hit or miss
-        hit = hitMiss(dist, tnkPos, diff);
-
-        //Display if hit or miss
-        if(hit==true){
-            cout<<"Target hit!"<<endl;
+        //Loop for tank destruction
+        for (int attmpt = 1; attmpt<5; attmpt++){
+            play(tnkPos, diff, score);
         }
-        if(hit==false){
-            cout<<"Target missed :("<<endl;
-        }
-
-        //Display if too close or too far
-        if(dist<tnkPos-10){
-            cout<<"Too close"<<endl;
-        }
-        else if(dist>tnkPos+10){
-            cout<<"Too far"<<endl;
-        }
-
-      }while(hit==false);
-
-    cout<<"tank was at "<<tnkPos<<" meters"<<endl;
-
-    //if miss, repeat firing
-
-    //if hit, move tank
-
-    //
-
+        
+        cout<<"score = "<<score<<endl;      
+        
+        cout<<"Play again? type Y to play again"<<endl;
+        cin>>choice;
+        
+    }while(choice=='y'||choice=='Y');
 
     return 0;
 }
@@ -118,13 +94,13 @@ int getDiff(){
     if(chc == 'e'||chc == 'E'){
         cout<<"Easy mode activated!"<<endl;
         cout<<"Cluster bombs enabled"<<endl;
-        cout<<"Blast radius: 20m"<<endl;
-        diff = 20;
+        cout<<"Blast radius: 70m"<<endl;
+        diff = 70;
     }
     else if(chc == 'h'||chc == 'H'){
         cout<<"Hard mode!"<<endl;
-        cout<<"projectile blast radius: 10m"<<endl;
-        diff = 10;
+        cout<<"projectile blast radius: 30m"<<endl;
+        diff = 30;
     }
     return diff;
 }
@@ -167,5 +143,57 @@ bool hitMiss(float dist, int t, char diff){
     }
     else
         return false;
+}
+
+//Function for displaying hit information
+void hitDisp(bool hit, int d, int t){
+
+    if(hit==true){
+        cout<<"Target hit!"<<endl;
+        cout<<"Tank was at "<<t<<"m"<<endl;
+    }
+    if(hit==false){
+        cout<<"Target missed..."<<endl;
+
+        //Display if too close or too far
+        if(d<t-10){
+            cout<<"Shot too close"<<endl;
+        }
+        else if(d>t+10){
+            cout<<"Shot too far"<<endl;
+        }
+    }
+    cout<<endl<<endl;
+}
+
+//function for general gameplay
+int play(int &tnkPos, int diff, int &score){
+
+    int ang, power;
+    float dist;
+    bool hit;
+
+    //Prompt user for firing instructions
+    input (ang, power);
+
+    //calculate projectile distance
+    dist = ballDst(ang, power);
+    cout<<endl<<endl;
+
+    //test if hit or miss
+    hit = hitMiss(dist, tnkPos, diff);
+    cout<<"your projectile hit "<<dist<<" meters"<<endl<<endl;
+
+    //Display if hit or miss
+    hitDisp(hit, dist, tnkPos);
+
+    //if hit, move tank, increment score
+    if(hit==true){
+        cout<<"Another tank spotted!"<<endl<<endl;
+        tnkPos = plcTnk();
+        score++;
+    }
+    return score;
+
 }
 
