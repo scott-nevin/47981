@@ -31,8 +31,7 @@ int  play(int&, int, int&, int, int&, char&);
 int main(){
 
     //Declare variables
-    int ang, power, attempt=1, tnkPos,
-            score=0, diff, ammo=20, att=0;
+    int attempt=1, tnkPos, score=0, diff, ammo=20, att=0;
     float dist;
     bool hit, bonus;
     char choice, b;
@@ -65,9 +64,13 @@ int main(){
             //reset bonus to 0
             b = 0;
             
+            //call main gameplay function
             play(tnkPos, diff, score, ammo, att, b);
             ammo--;
             
+            //Bonus shot rewarding system
+            //increment shots remaining message
+            //decrement for loop
             if (b == 1){
                 ammo++;
                 attempt--;
@@ -130,6 +133,7 @@ int plcTnk(){
 
 //Function for user firing input
 void input(int &a,int &p){
+    
         //Prompt the user for inputs
         do{
         cout<<"Input firing angle (0-90)"<<endl;
@@ -145,13 +149,15 @@ void input(int &a,int &p){
 int ballDst(int a, int p){
 
     float d;
+    
     d = ((p*p)*sin(2*(a*(PI/180))))/G;
     return d;
 }
 
 //Function testing if projectile hit
 bool hitMiss(float dist, int t, char diff){
-
+    
+    //test if projectiles blast radius hit tank
     if (dist > t-diff && dist < t+diff){
         return true;
     }
@@ -213,11 +219,14 @@ int play(int &tnkPos, int diff, int &score, int ammo, int &att, char &b){
         
         tnkPos = plcTnk();
         score+=50;
+        
+        //if tank was destroyed on first try, reward with extra shot
         if(att==1){
             cout<<"Hole in one bonus!"<<endl;
             cout<<"Extra shot rewarded"<<endl<<endl;
             b = 1;
         }
+        //reset number of attempts for next tank to 0
         cout<<"Another tank spotted!"<<endl<<endl;
         att=0;
     }
