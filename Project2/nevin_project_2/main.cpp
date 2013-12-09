@@ -1,6 +1,6 @@
 /*
  *  Scott Nevin
- *  November 21, 2013
+ *  December 10 , 2013
  *  Purpose: Ballistic trajectory game
  *  Project 2
  *
@@ -44,7 +44,7 @@ int main(){
     bool hit, bonus;
     char choice, b;
     string name;
-    fstream easyFile; 
+    fstream easyFile, hardFile; 
     
     //Initialize array for high scores using structure
     highscore scores[11];
@@ -75,7 +75,7 @@ int main(){
         ammo = 20;
         
         //Loop for tank destruction
-        for (int attmpt = 1; attmpt<20; attmpt++){ 
+        for (int attmpt = 0; attmpt<20; attmpt++){ 
             
             //reset bonus to 0
             b = 0;
@@ -97,66 +97,135 @@ int main(){
         cout<<"score = "<<score<<endl; 
         cout<<"# of hits = "<<score/50<<endl;
         
-       //read in high scores from file
-        easyFile.open("easyscores.txt",ios::in);
         
-        //bring in values from file
-        for(int i=0;i<10;i++){
-            
-            easyFile>>scores[i].name;
-            easyFile>>scores[i].score;
-            
+        //High scores for easy
+        if(diff==70){
+        //read in high scores from file
+         easyFile.open("easyscores.txt",ios::in);
+
+         //bring in values from file
+         for(int i=0;i<10;i++){
+
+             easyFile>>scores[i].name;
+             easyFile>>scores[i].score;
+
+         }
+
+         //test users new score
+         if(score>scores[9].score){
+
+             cout<<"New High Score!"<<endl;
+             cout<<"Input name:"<<endl;
+             cin>>name;
+
+             //set new score to 11th spot in array
+             scores[10].name = name;
+             scores[10].score = score;
+
+             //sort scores
+             for(int i = 10; i>0;i--){
+                 if (scores[i].score > scores[i-1].score){
+                     //set temp value
+                     scores[11].score = scores[i].score;
+                     scores[i].score = scores[i-1].score;
+                     scores[i-1].score = scores[11].score;
+
+                     //sort names
+                     scores[11].name = scores[i].name;
+                     scores[i].name = scores[i-1].name;
+                     scores[i-1].name = scores[11].name;
+                 }
+
+             }
+         }
+
+         //Close file
+         easyFile.close();
+
+         //Open file for writing
+         easyFile.open("easyscores.txt", ios::out);
+
+         //Clear file for writing
+         easyFile.clear();
+
+         //write scores to file
+         for(int i = 0; i<10;i++){
+             easyFile<<scores[i].name<<setw(15)<<scores[i].score<<endl;
+         }
+
+         //close that file
+         easyFile.close();
+
+         //output high scores
+         cout<<"Easy High Scores!\n"<<endl;
+         for(int i=0; i<10;i++){
+         cout<<scores[i].name<<setw(10)<<scores[i].score<<endl;
+         }
         }
         
-        //test users new score
-        if(score>scores[9].score){
-            
-            cout<<"New High Score!"<<endl;
-            cout<<"Input name:"<<endl;
-            cin>>name;
-            
-            //set new score to 11th spot in array
-            scores[10].name = name;
-            scores[10].score = score;
-            
-            //sort scores
-            for(int i = 10; i>0;i--){
-                if (scores[i].score > scores[i-1].score){
-                    //set temp value
-                    scores[11].score = scores[i].score;
-                    scores[i].score = scores[i-1].score;
-                    scores[i-1].score = scores[11].score;
-                    
-                    //sort names
-                    scores[11].name = scores[i].name;
-                    scores[i].name = scores[i-1].name;
-                    scores[i-1].name = scores[11].name;
-                }
-                
+        //high scores for hard
+        else if(diff==30){
+            //read in high scores from file
+            hardFile.open("hardscores.txt",ios::in);
+
+            //bring in values from file
+            for(int i=0;i<10;i++){
+
+                hardFile>>scores[i].name;
+                hardFile>>scores[i].score;
+
             }
-        }
-        
-        //Close file
-        easyFile.close();
-        
-        //Open file for writing
-        easyFile.open("easyscores.txt", ios::out);
-        
-        //Clear file for writing
-        easyFile.clear();
-        
-        //write scores to file
-        for(int i = 0; i<10;i++){
-            easyFile<<scores[i].name<<setw(15)<<scores[i].score<<endl;
-        }
-        
-        //close that file
-        easyFile.close();
-        
-        //output high scores
-        cout<<"High Scores!\n"<<endl;
-        for(int i=0; i<10;i++){
-        cout<<scores[i].name<<setw(10)<<scores[i].score<<endl;
+
+            //test users new score
+            if(score>scores[9].score){
+
+                cout<<"New High Score!"<<endl;
+                cout<<"Input name:"<<endl;
+                cin>>name;
+
+                //set new score to 11th spot in array
+                scores[10].name = name;
+                scores[10].score = score;
+
+                //sort scores
+                for(int i = 10; i>0;i--){
+                    if (scores[i].score > scores[i-1].score){
+                        //set temp value
+                        scores[11].score = scores[i].score;
+                        scores[i].score = scores[i-1].score;
+                        scores[i-1].score = scores[11].score;
+
+                        //sort names
+                        scores[11].name = scores[i].name;
+                        scores[i].name = scores[i-1].name;
+                        scores[i-1].name = scores[11].name;
+                    }
+
+                }
+            }
+
+            //Close file
+            hardFile.close();
+
+            //Open file for writing
+            hardFile.open("hardscores.txt", ios::out);
+
+            //Clear file for writing
+            hardFile.clear();
+
+            //write scores to file
+            for(int i = 0; i<10;i++){
+                hardFile<<scores[i].name<<setw(15)<<scores[i].score<<endl;
+            }
+
+            //close that file
+            hardFile.close();
+
+            //output high scores
+            cout<<"Hard High Scores!\n"<<endl;
+            for(int i=0; i<10;i++){
+            cout<<scores[i].name<<setw(10)<<scores[i].score<<endl;
+            }
         }
         
         cout<<"Play again? type Y to play again"<<endl;
