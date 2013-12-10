@@ -49,7 +49,7 @@ int main(){
     cout<<"You're under attack!\nOutside your base, several tanks appear"<<endl;
     cout<<"The tanks will come within 1000 meters."<<endl;
     cout<<"Input the angle to aim your cannon and the speed to fire the projectile."<<endl;
-    cout<<"You have 20 shots to destroy as many as you can.\n\n"<<endl;
+    cout<<"You have 15 shots to destroy as many as you can.\n\n"<<endl;
 
     //Get the system time
     unsigned seed = time(0);
@@ -67,10 +67,10 @@ int main(){
         
         //Reset scores and ammo
         score = 0;
-        ammo = 20;
+        ammo = 15;
         
         //Loop for tank destruction
-        for (int attmpt = 0; attmpt<20; attmpt++){ 
+        for (int attmpt = 0; attmpt<15; attmpt++){ 
             
             //reset bonus to 0
             b = 0;
