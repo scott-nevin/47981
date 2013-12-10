@@ -1,6 +1,6 @@
+Scott            350
 Scott             50
-empty              0
-empty              0
+Scott             50
 empty              0
 empty              0
 empty              0
