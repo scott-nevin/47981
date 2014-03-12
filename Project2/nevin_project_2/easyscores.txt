@@ -1,7 +1,7 @@
+Kirstyn            600
 Scott            350
 Scott             50
 Scott             50
-empty              0
 empty              0
 empty              0
 empty              0
